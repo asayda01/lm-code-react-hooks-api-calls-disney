@@ -14,9 +14,9 @@ const App : React.FC = () => {
   const [characters, setCharacters] = useState<Array<DisneyCharacter>>([ ]);
 
   useEffect(() => {
-    getCharacters(1);
+    getCharacters(currentPage);
     console.log("useEffect triggered");
-  }, []);
+  }, [currentPage]);
 
   const getCharacters = async (pageNumber : number) => {
     const apiResponse = await fetch(`http://api.disneyapi.dev/characters?page=${pageNumber}`);
