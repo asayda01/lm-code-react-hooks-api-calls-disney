@@ -6,6 +6,8 @@ import CharacterContainer from './components/character_container';
 import Navigation from './components/navigation';
 import { DisneyCharacter } from './disney_character';
 
+export const FavouritesContext = React.createContext<number[]>( []);
+
 const App : React.FC = () => {
 
 	const [currentPage, setCurrentPage] = useState<number>(1);
@@ -13,7 +15,7 @@ const App : React.FC = () => {
   // Some dummy state representing disney characters
   const [characters, setCharacters] = useState<Array<DisneyCharacter>>([ ]);
   
-  // Favouriting a character - / + Defavouriting a character
+  // Favouriting a character - / + De-favouriting a character
   const [characterFavourites, setCharacterFavourites] = useState<Array<number>>([]);
 
   useEffect(() => {
@@ -28,15 +30,13 @@ const App : React.FC = () => {
   };
 
   return (
-    <div className="page">
-      <Header currentPage={currentPage} />
-      <Navigation currentPage={currentPage} setCurrentPage={setCurrentPage} />
-      <CharacterContainer 
-        characters={characters}
-        characterFavourites={characterFavourites}
-        updateFavourites={setCharacterFavourites} 
-      />
-    </div>
+    <FavouritesContext.Provider value={characterFavourites}>
+      <div className="page">
+        <Header currentPage={currentPage} />
+        <Navigation currentPage={currentPage} setCurrentPage={setCurrentPage} />
+        <CharacterContainer characters={characters} updateFavourites={setCharacterFavourites}  />
+      </div>
+    </FavouritesContext.Provider>
   );
 }
 
